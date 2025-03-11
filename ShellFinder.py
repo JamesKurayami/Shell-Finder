@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import os
 import requests
 import time
@@ -12,13 +11,12 @@ class bcolors:
     BLEU = '\033[34m'
     RED = '\033[91m'
 
-# Affichage du banner avec des couleurs pour plus d'impact
 def banner():
     print("""
        \033[34m
-          #Author  : Hackfut
-          #Contact : t.me/H4ckfutSec
-          #Github  : https://github.com/HackfutSec
+          #Author  : D4RKD3MON
+          #Contact : t.me/D4RKD3MON
+          #Github  : https://github.com/JamesKurayami
           #License : MIT  
           [Warning] I am not responsible for the way you will use this program [Warning]
                   _____ _          _ _   ______ _           _           
@@ -31,7 +29,6 @@ def banner():
                \033[1;34m ⓦⓔⓑⓢⓗⓔⓛⓛ ⓦⓔⓑⓢⓗⓔⓛⓛ ⓦⓔⓑⓢⓗⓔⓛⓛ ⓦⓔⓑⓢⓗⓔⓛⓛ ⓦⓔⓑⓢⓗⓔⓛⓛ ⓦⓔⓑⓢⓗⓔⓛⓛ
           """)
 
-# Fonction pour effacer l'écran en fonction du système d'exploitation
 def clearing():
     if os.name == 'nt':
         os.system('cls')
@@ -39,8 +36,6 @@ def clearing():
         os.system('clear')
 
 
-# Paramètres de configuration
-# Headers de Google Chrome
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -51,7 +46,6 @@ headers = {
 }
 
 
-# Configuration des proxies (si spécifié dans le fichier de configuration)
 proxies = {
     'PROXY': 'http://193.34.144.169:80',
     'PROXY': 'https://193.34.144.169:80'
@@ -59,19 +53,17 @@ proxies = {
     print(bcolors.RED + f'\n[+] Connection Error With Proxy ...')
 }
 
-# Fonction pour valider si l'URL entrée est correcte
 def validate_url(url, headers=headers, proxies=proxies):
     regex = re.compile(
-        r'^(?:http|ftp)s?://' # http:// ou https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' # Domaine ou sous-domaine
-        r'localhost|' # ou localhost
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|' # ou une adresse IP
-        r'\[?[A-F0-9]*:[A-F0-9:]+\]?)' # ou une adresse IPv6
-        r'(?::\d+)?' # Port optionnel
+        r'^(?:http|ftp)s?://' 
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' 
+        r'localhost|' 
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|' 
+        r'\[?[A-F0-9]*:[A-F0-9:]+\]?)' 
+        r'(?::\d+)?' 
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     return re.match(regex, url) is not None
 
-# Fonction pour envoyer un message via Telegram
 def send_telegram_message(token, chat_id, message):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {
@@ -87,7 +79,6 @@ def send_telegram_message(token, chat_id, message):
     except requests.exceptions.RequestException as e:
         print(f"[!] Error sending message: {e}")
 
-# Fonction pour demander à l'utilisateur s'il veut envoyer les résultats par Telegram
 def get_telegram_info():
     send_telegram = input("\033[32m[+] \033[1;93mDo you want to send the results to Telegram? \033[1;34m(yes/no): ").strip().lower()
 
@@ -95,7 +86,7 @@ def get_telegram_info():
         token = input(bcolors.YELLOW + "[+] Enter your Telegram bot token: ").strip()
         chat_id = input(bcolors.YELLOW + "[+] Enter your chat ID: ").strip()
 
-        # Test de la connexion à l'API Telegram pour vérifier si le token et le chat_id sont valides
+        
         url = f"https://api.telegram.org/bot{token}/getMe"
         try:
             response = requests.get(url)
@@ -112,7 +103,6 @@ def get_telegram_info():
         print("\033[1;31m\n[+] Continuing without Telegram.\033[0m")
         return None, None
 
-# Liste des shells par défaut
 default_shells = [
 '/madspot.php', '/mad.php', '/wp-admin/js/widgets/about.php7', '/wp-admin/js/widgets/admin.php','/Njima.php','/about.php','/about.php7','/7x.php', '/x7.php', '/404.php', '/anon.php', '/anonymous.php', '/shell.php','/sh3ll.php', '/madspotshell.php', '/b374k.php', '/c100.php', '/priv8.php', '/private.php', '/file.php',
 '/wp-content/themes/hideo/network.php','/wp-content/plugins/dummyyummy/wp-signup.php','/wp-content/plugins/fix/up.php','/inputs.php','/wp-admin/maint/upfile.php',
@@ -287,7 +277,6 @@ default_shells = [
 '/k.php','/l.php','/m.php','/w.php','/x.php','/c.php','/v.php','/b.php','/n.php','/1.php','/2.php','/3.php','/4.php','/5.php','/6.php','/7.php','/8.php','/9.php','/10.php','/12.php','/11.php','/1234.php'
 ]
 
-# Fonction pour demander à l'utilisateur s'il veut utiliser la liste de shells par défaut ou un fichier personnalisé
 def get_shell_list():
     print("\n\033[1;34m[1;34m[+] Choose how to provide the shell list:\n\n ")
     print(bcolors.YELLOW + "1. Use the default list of shells.")
@@ -315,7 +304,6 @@ def get_shell_list():
 
     return shell_list
 
-# Fonction pour demander à l'utilisateur s'il veut charger un fichier ou entrer une liste d'URLs
 def get_website_list():
     print("\n\033[1;32m[+] \033[1;34mChoose how to provide the websites for shell search:\n\n")
     print(bcolors.YELLOW + "1. Enter a list of URLs manually (separated by new lines).")
@@ -350,7 +338,6 @@ def get_website_list():
 
     return website_list
 
-# Fonction principale pour effectuer la recherche de shell
 def find_shells():
     token, chat_id = get_telegram_info()
 
@@ -368,16 +355,16 @@ def find_shells():
 
     foundshells = []
 
-    with requests.Session() as session:  # Utilisation de la session pour améliorer les performances
+    with requests.Session() as session:  
         for website in websites:
             print(bcolors.YELLOW + f"\n[+] Scanning {website} for shells...")
             for shell in shells:
                 if not website.startswith('http://') and not website.startswith('https://'):
-                    website = 'http://' + website  # Ajouter http:// par défaut
+                    website = 'http://' + website  
                 host = website + shell
 
                 try:
-                    response = session.get(host, timeout=5, headers=headers, proxies=proxies)  # Délai de 5 secondes
+                    response = session.get(host, timeout=5, headers=headers, proxies=proxies)  
                     if response.status_code == 200:
                         print(f'\033\n[1;32m[+] Shell found: {host}\033[0m {bcolors.BLEU} '+' [+] Code: 200')
                         foundshells.append(host)
@@ -388,20 +375,19 @@ def find_shells():
                 except requests.exceptions.RequestException as e:
                     print(bcolors.RED + f'\n[!] Error with {host}: {e} \033\031m {bcolors.YELLOW} '+'[+] Code: 403')
 
-                time.sleep(1)  # Ajouter un délai de 1 seconde entre les requêtes
+                time.sleep(1)  
 
     if foundshells:
         fpth = os.getcwd()
         fpth2 = os.path.join(fpth, 'found.txt')
 
-        # Vérification si le fichier existe déjà pour éviter de l'écraser
         with open(fpth2, 'w') as fob:
             for shell in foundshells:
                 fob.write(shell + '\n')
 
         print(f'\033[32m\n[1;34m[+] Found shells saved in: {fpth2}\033[0m')
         
-        # Envoi sur Telegram si demandé
+        
         if token and chat_id:
             message = "\n".join(foundshells)
             send_telegram_message(token, chat_id, message)
@@ -410,7 +396,7 @@ def find_shells():
 
     input(bcolors.BLEU + '\n[+] Press enter to exit...')
 
-# Exécution du programme
+
 if __name__ == "__main__":
     clearing()
     banner()
